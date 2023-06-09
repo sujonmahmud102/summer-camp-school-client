@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { FaGoogle, FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import SocialLogin from '../Shared/Components/SocialLogin/SocialLogin';
 import { useForm } from 'react-hook-form';

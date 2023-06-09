@@ -1,19 +1,43 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import SocialLogin from '../Shared/Components/SocialLogin/SocialLogin';
 import { Link, useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth/useAuth';
 import Swal from 'sweetalert2';
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Register = () => {
     const { createdByEmailPass, updateUserInfo } = useAuth();
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const navigate = useNavigate();
+    const [passwordType, setPasswordType] = useState('password');
+
+    const password = watch('password');
+    const confirmPass = watch('confirmPass');
+
+    useEffect(() => {
+        register('confirmPass', {
+            validate: (value) => value === password || 'Passwords do not match',
+        });
+    }, [register, password]);
+
+    console.log(errors);
+
+    // handle password type change
+    const handlePassType = () => {
+        if (passwordType === 'password') {
+            setPasswordType('text')
+        }
+        else {
+            setPasswordType('password')
+        }
+    }
 
 
 
     const onSubmit = data => {
         console.log(data);
+
         createdByEmailPass(data.email, data.password)
             .then(result => {
                 const loggedUser = result.user;
@@ -87,22 +111,43 @@ const Register = () => {
                     <div>
                         <div className="lg:flex justify-between gap-4 mb-8">
 
-                            <div className="form-control  lg:w-1/2">
+                            <div className="form-control relative lg:w-1/2">
                                 <label className="label">
                                     <span className="label-text">Password</span>
                                 </label>
-                                <input {...register("password", { required: true })} type="password" placeholder="Enter password" className="input input-bordered w-full" />
+                                <input {...register("password", { required: true, minLength: 6, pattern: /(?=.*[A-Z])(?=.*[@$!%*?&])/ },)} type={passwordType} placeholder="Enter password" className="input input-bordered w-full" />
+
+                                {/* icon for pass showing or not */}
+                                <div className="absolute right-1 top-11 p-2 rounded-md" onClick={handlePassType}>
+                                    {
+                                        passwordType === 'password' ?
+                                            <span>  < FaEye ></FaEye></span>
+                                            :
+                                            <span> <FaEyeSlash></FaEyeSlash></span>
+                                    }
+                                </div>
+
                                 {/* error showing */}
-                                {errors.password && <span className='text-red-500 text-xs mt-1'>This field is required</span>}
+                                {errors.password?.type === 'required' && <span className='text-red-500 text-xs mt-1'>This field is required</span>}
+                                {((errors.password?.type === 'pattern' || errors.password?.type === 'minLength') && (
+                                    <span className='text-red-500 text-xs mt-1'>
+                                        Password must be longer than 6 characters and must contain at least one capital letter and one special character
+                                    </span>
+                                ))}
+
                             </div>
 
-                            <div className="form-control  lg:w-1/2">
+                            <div className="form-control relative lg:w-1/2">
                                 <label className="label">
                                     <span className="label-text">Confirm Password</span>
                                 </label>
-                                <input {...register("confirmPass", { required: true })} type="password" placeholder="Enter confirm password" className="input input-bordered w-full" />
+                                <input {...register("confirmPass", { required: true })} type={passwordType} placeholder="Enter confirm password" className="input input-bordered w-full" />
+
                                 {/* error showing */}
-                                {errors.confirmPass && <span className='text-red-500 text-xs mt-1'>This field is required</span>}
+                                {errors.confirmPass && (
+                                    <span className="text-red-500 text-xs mt-1">{errors.confirmPass.message}</span>
+                                )}
+                                {errors.confirmPass?.type === 'required' && <span className='text-red-500 text-xs mt-1'>This field is required</span>}
                             </div>
 
                         </div>
