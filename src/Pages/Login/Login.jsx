@@ -3,13 +3,39 @@ import { FaGoogle, FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import SocialLogin from '../Shared/Components/SocialLogin/SocialLogin';
 import { useForm } from 'react-hook-form';
+import useAuth from '../../hooks/useAuth/useAuth';
+import Swal from 'sweetalert2';
 
 
 
 const Login = () => {
+    const { signInByEmailPass } = useAuth();
     const [passwordType, setPasswordType] = useState('password');
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = data => console.log(data);
+    const navigate = useNavigate();
+
+
+    const onSubmit = data => {
+        console.log(data);
+        signInByEmailPass(data.email, data.password)
+            .then(result => {
+                const loggedUser = result.user;
+                console.log(loggedUser);
+                Swal.fire(
+                    'Good job!',
+                    'Successfully login',
+                    'success'
+                );
+
+                navigate('/')
+
+            })
+            .catch(error => {
+                console.log(error);
+
+
+            })
+    };
 
     // handle password type change
     const handlePassType = () => {

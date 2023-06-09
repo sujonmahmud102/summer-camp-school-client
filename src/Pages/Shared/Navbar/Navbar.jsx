@@ -5,8 +5,17 @@ import useAuth from '../../../hooks/useAuth/useAuth';
 
 
 const Navbar = () => {
-    const { user } = useAuth();
+    const { user, logOut } = useAuth();
 
+
+    // handle LogOUt
+    const handleLogOUt = () => {
+        logOut()
+            .then()
+            .catch(error => {
+                console.log(error)
+            })
+    }
 
     const navItems = <>
         <li className='mr-4'>
@@ -45,7 +54,7 @@ const Navbar = () => {
                         <div className="tooltip tooltip-left" data-tip={user?.displayName}>
                             <img className='rounded-full w-6 h-6 md:w-10 md:h-10 mr-3' src={user?.photoURL} alt="User image" />
                         </div>
-                        <button className='md:btn btn btn-sm'>Logout</button>
+                        <button onClick={handleLogOUt} className='md:btn btn btn-sm'>Logout</button>
                     </> :
                         <Link to='/login'>
                             <button className='md:btn md:btn-secondary btn-secondary py-1 px-2 rounded-md'>Login</button>
