@@ -1,12 +1,18 @@
 import { createBrowserRouter } from 'react-router-dom';
-import Navbar from '../Pages/Shared/Navbar/Navbar';
 import Main from '../Pages/Layout/Main';
+import Register from '../Pages/Register/Register';
 
 
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <Main></Main>
+        element: <Main></Main>,
+        children: [
+            {
+                path: '/register',
+                element: <Register></Register>
+            }
+        ]
     }
 ])
 
