@@ -1,9 +1,30 @@
 import React from 'react';
 import { FaGoogle } from "react-icons/fa";
+import useAuth from '../../../../hooks/useAuth/useAuth';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 const SocialLogin = () => {
-    const registerByGoogle = () => {
+    const navigate = useNavigate();
 
+
+
+    const { createdByGoogle } = useAuth();
+    const registerByGoogle = () => {
+        createdByGoogle()
+            .then(result => {
+                const loggedUser = result.user;
+                console.log(loggedUser);
+                Swal.fire(
+                    'Good job!',
+                    'Successfully login by Google',
+                    'success'
+                );
+                navigate('/');
+            })
+            .catch(error => {
+                console.log(error)
+            })
     }
 
     return (
