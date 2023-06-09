@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import SocialLogin from '../Shared/Components/SocialLogin/SocialLogin';
 import { Link } from 'react-router-dom';
 
 const Register = () => {
@@ -10,18 +11,17 @@ const Register = () => {
 
     return (
         <div className='bg-[rgba(11,6,51,0.18)]'>
-
             <div className="hero h-72" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1596464716127-f2a82984de30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80)' }}>
                 <div className="hero-overlay bg-opacity-60"></div>
                 <div className="hero-content text-center text-neutral-content">
                     <div className="max-w-md">
                         <h1 className="mb-5 text-7xl font-bold uppercase">Register</h1>
                         <p><Link className='text-error' to='/'>Home</Link> / Register</p>
+                        <p className='mt-5 text-white'>Already have an account? <Link className='text-error' to='/login'>Login</Link></p>
                     </div>
                 </div>
 
             </div>
-
 
             <div className="p-4 lg:p-24 rounded-lg">
 
@@ -95,10 +95,10 @@ const Register = () => {
                                 </label>
 
                                 <select {...register("gender", { required: true })} className="select select-bordered w-full">
-                                    <option disabled selected>Select One</option>
-                                    <option>Male</option>
-                                    <option>Female</option>
-                                    <option>Other</option>
+                                    <option value="" disabled selected>Select One</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
                                 </select>
                                 {/* error showing */}
                                 {errors.gender && <span className='text-red-500 text-xs mt-1'>This field is required</span>}
@@ -141,6 +141,9 @@ const Register = () => {
                     </div>
 
                 </form>
+                <div className='w-1/6 mx-auto'>
+                    <SocialLogin></SocialLogin>
+                </div>
             </div>
         </div>
     );
