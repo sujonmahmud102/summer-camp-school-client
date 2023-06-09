@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
 import logo from '../../../../public/logo.png'
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../../../AuthProvider/AuthProvider';
+import useAuth from '../../../hooks/useAuth/useAuth';
+
 
 const Navbar = () => {
-const {user}=useContext(AuthContext);
-console.log(user)
+    const { user } = useAuth();
+
 
     const navItems = <>
         <li className='mr-4'>
@@ -37,9 +38,21 @@ console.log(user)
                     {navItems}
                 </ul>
             </div>
+
             <div className="navbar-end">
-                <a className="btn">Login</a>
+                {
+                    user ? <>
+                        <div className="tooltip tooltip-left" data-tip={user?.displayName}>
+                            <img className='rounded-full w-6 h-6 md:w-10 md:h-10 mr-3' src={user?.photoURL} alt="User image" />
+                        </div>
+                        <button className='md:btn btn btn-sm'>Logout</button>
+                    </> :
+                        <Link to='/login'>
+                            <button className='md:btn md:btn-secondary btn-secondary py-1 px-2 rounded-md'>Login</button>
+                        </Link>
+                }
             </div>
+
         </div>
     );
 };

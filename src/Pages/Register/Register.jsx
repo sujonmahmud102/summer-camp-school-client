@@ -1,11 +1,44 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import SocialLogin from '../Shared/Components/SocialLogin/SocialLogin';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth/useAuth';
+import Swal from 'sweetalert2';
 
 const Register = () => {
+    const { createdByEmailPass, updateUserInfo } = useAuth();
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = data => console.log(data);
+    const navigate = useNavigate();
+
+
+
+    const onSubmit = data => {
+        console.log(data);
+        createdByEmailPass(data.email, data.password)
+            .then(result => {
+                const loggedUser = result.user;
+                console.log(loggedUser);
+                Swal.fire(
+                    'Good job!',
+                    'You have successfully registered',
+                    'success'
+                );
+                // update profile
+                updateUserInfo(data.name, data.photo)
+                    .then(() => {
+                        console.log('profile updated')
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    });
+                navigate('/');
+            })
+            .catch(error => {
+                console.log(error);
+
+
+            })
+    };
 
 
 
@@ -25,7 +58,7 @@ const Register = () => {
 
             <div className="p-4 lg:p-24 rounded-lg">
 
-                <form onSubmit={handleSubmit(onSubmit)}> 
+                <form onSubmit={handleSubmit(onSubmit)}>
 
                     {/* form first row */}
                     <div className="lg:flex justify-between gap-4 mb-8">
@@ -58,7 +91,7 @@ const Register = () => {
                                 <label className="label">
                                     <span className="label-text">Password</span>
                                 </label>
-                                <input {...register("password", { required: true })} type="text" placeholder="Enter password" className="input input-bordered w-full" />
+                                <input {...register("password", { required: true })} type="password" placeholder="Enter password" className="input input-bordered w-full" />
                                 {/* error showing */}
                                 {errors.password && <span className='text-red-500 text-xs mt-1'>This field is required</span>}
                             </div>
@@ -67,7 +100,7 @@ const Register = () => {
                                 <label className="label">
                                     <span className="label-text">Confirm Password</span>
                                 </label>
-                                <input {...register("confirmPass", { required: true })} type="text" placeholder="Enter confirm password" className="input input-bordered w-full" />
+                                <input {...register("confirmPass", { required: true })} type="password" placeholder="Enter confirm password" className="input input-bordered w-full" />
                                 {/* error showing */}
                                 {errors.confirmPass && <span className='text-red-500 text-xs mt-1'>This field is required</span>}
                             </div>
