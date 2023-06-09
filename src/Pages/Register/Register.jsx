@@ -21,7 +21,6 @@ const Register = () => {
         });
     }, [register, password]);
 
-    console.log(errors);
 
     // handle password type change
     const handlePassType = () => {
@@ -36,7 +35,7 @@ const Register = () => {
 
 
     const onSubmit = data => {
-        console.log(data);
+        // console.log(data);
 
         createdByEmailPass(data.email, data.password)
             .then(result => {
@@ -68,6 +67,7 @@ const Register = () => {
 
     return (
         <div className='bg-[rgba(11,6,51,0.18)]'>
+            
             <div className="hero h-72" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1596464716127-f2a82984de30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80)' }}>
                 <div className="hero-overlay bg-opacity-60"></div>
                 <div className="hero-content text-center text-neutral-content">
