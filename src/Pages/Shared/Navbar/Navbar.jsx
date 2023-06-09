@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import logo from '../../../../public/logo.png'
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../../AuthProvider/AuthProvider';
 
 const Navbar = () => {
+const {user}=useContext(AuthContext);
+console.log(user)
+
     const navItems = <>
         <li className='mr-4'>
             <Link to='/'>Home</Link>

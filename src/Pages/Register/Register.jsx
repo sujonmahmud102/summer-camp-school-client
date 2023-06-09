@@ -25,7 +25,7 @@ const Register = () => {
 
             <div className="p-4 lg:p-24 rounded-lg">
 
-                <form onSubmit={handleSubmit(onSubmit)}>
+                <form onSubmit={handleSubmit(onSubmit)}> 
 
                     {/* form first row */}
                     <div className="lg:flex justify-between gap-4 mb-8">
