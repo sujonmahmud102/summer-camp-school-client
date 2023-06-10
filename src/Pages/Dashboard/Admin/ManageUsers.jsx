@@ -4,18 +4,11 @@ import { useQuery } from 'react-query';
 import Swal from 'sweetalert2';
 
 const ManageUsers = () => {
-    // const [users, setUsers] = useState([]);
     const { data: users = [], refetch } = useQuery(['users'], async () => {
         const res = await fetch('http://localhost:5000/users')
         const data = await res.json();
         return data;
     });
-
-    // useEffect(() => {
-    //     fetch('http://localhost:5000/users')
-    //         .then(res => res.json())
-    //         .then(data => setUsers(data))
-    // }, [])
 
     // handle making admin
     const handleMakeAdmin = user => {
@@ -37,7 +30,27 @@ const ManageUsers = () => {
                 }
             })
     }
-    // console.log(users)
+
+    // handle making instructor
+    const handleMakeInstructor = user => {
+        fetch(`http://localhost:5000/users/instructor/${user._id}`, {
+            method: 'PATCH'
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.modifiedCount) {
+                    refetch();
+                    Swal.fire({
+                        position: 'top-center',
+                        icon: 'success',
+                        title: `${user.name} is an Instructor Now!`,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            })
+    }
 
     return (
         <div className='w-full px-16'>
@@ -77,7 +90,13 @@ const ManageUsers = () => {
                                             :
                                             <button onClick={() => handleMakeAdmin(user)} className="btn btn-ghost bg-error  text-white">Make Admin</button>
                                     }
-                                    <button onClick={() => handleMakeInstructor(user)} className="btn btn-ghost bg-gray-600 text-white ml-4">Make Instructor</button>
+                                    {
+                                        user?.role === 'Instructor' ?
+                                            <button className="btn btn-ghost bg-gray-600 text-white ml-4" disabled="disabled">Make Instructor</button>
+                                            :
+                                            <button onClick={() => handleMakeInstructor(user)} className="btn btn-ghost bg-gray-600 text-white ml-4">Make Instructor</button>
+                                    }
+
                                 </td>
 
                             </tr>)

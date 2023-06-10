@@ -2,9 +2,19 @@ import logo from '../../../public/logo.png'
 import { FaClipboardList, FaHome, FaUsers } from 'react-icons/fa';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth/useAuth';
+import { useQuery } from 'react-query';
 
 const Dashboard = () => {
     const { user } = useAuth();
+
+    const { data: users = [] } = useQuery(['users'], async () => {
+        const res = await fetch('http://localhost:5000/users')
+        const data = await res.json();
+        return data;
+    });
+
+    const currentUser = users?.find(cUser => cUser.email === user?.email);
+
 
     return (
         <div>
@@ -30,7 +40,7 @@ const Dashboard = () => {
                                 <div>
                                     <p className='text-black'>{user?.displayName}</p>
                                     {/* todo make it dynamic */}
-                                    <p className='text-xs'>Admin</p>
+                                    <p className='text-xs'>{currentUser?.role ? currentUser?.role : 'Student'}</p>
                                 </div>
                             </div>
                         </div>
