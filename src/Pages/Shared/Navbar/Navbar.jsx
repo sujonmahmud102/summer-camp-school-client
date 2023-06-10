@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import logo from '../../../../public/logo.png'
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth/useAuth';
 
 
@@ -19,14 +19,46 @@ const Navbar = () => {
 
     const navItems = <>
         <li className='mr-4'>
-            <Link to='/'>Home</Link>
+            <NavLink
+                to='/'
+                className={({ isActive }) => isActive ? "font-bold text-error" : ""}
+            >Home
+            </NavLink>
         </li>
-        <li className='mr-4'>Instructors</li>
-        <li className='mr-4'>Classes</li>
-        {/* To do: need to conditional */}
-        <li className='mr-4'>Dashboard</li>
-        {/* register */}
-        <li className='mr-4'><Link to='/register'>Register</Link> </li>
+        <li className='mr-4'>
+            <NavLink
+                to='/instructors'
+                className={({ isActive }) => isActive ? "font-bold text-error" : ""}
+            >Instructors
+            </NavLink>
+        </li>
+        <li className='mr-4'>
+            <NavLink
+                to='/classes'
+                className={({ isActive }) => isActive ? "font-bold text-error" : ""}
+            >Classes
+            </NavLink>
+        </li>
+        <li className='mr-4'>
+            {user ?
+                <NavLink
+                    to='/dashboard'
+                    className={({ isActive }) => isActive ? "font-bold text-error" : ""}
+                >Dashboard
+                </NavLink> :
+                <></>
+            }
+        </li>
+        <li className='mr-4'>
+            {!user ?
+                <NavLink
+                    to='/register'
+                    className={({ isActive }) => isActive ? "font-bold text-error" : ""}
+                >Register
+                </NavLink> :
+                <></>
+            }
+        </li>
     </>
 
     return (
