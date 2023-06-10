@@ -42,7 +42,7 @@ const Navbar = () => {
         <li className='mr-4'>
             {user ?
                 <NavLink
-                    to='/dashboard'
+                    to='/dashboard/'
                     className={({ isActive }) => isActive ? "font-bold text-error" : ""}
                 >Dashboard
                 </NavLink> :
@@ -72,7 +72,7 @@ const Navbar = () => {
                         {navItems}
                     </ul>
                 </div>
-                <a className="btn btn-ghost normal-case text-xl"><img className='w-24' src={logo} alt="" /> </a>
+                <Link to='/' className="btn btn-ghost normal-case text-xl"><img className='w-24' src={logo} alt="" /> </Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">

@@ -12,6 +12,8 @@ const Login = () => {
     const { signInByEmailPass } = useAuth();
     const [passwordType, setPasswordType] = useState('password');
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const [emailError, setEmailError] = useState('');
+    const [passError, setPassError] = useState('');
     const navigate = useNavigate();
 
 
@@ -32,7 +34,21 @@ const Login = () => {
             })
             .catch(error => {
                 console.log(error);
-
+                if (error.message === 'Firebase: Error (auth/invalid-email).') {
+                    setPassError('');
+                    setEmailError('Please provide valid email format')
+                }
+                else if (error.message === 'Firebase: Error (auth/user-not-found).') {
+                    setPassError('');
+                    setEmailError('User not found for this email')
+                }
+                else if (error.message === 'Firebase: Error (auth/wrong-password).') {
+                    setEmailError('');
+                    setPassError('Wrong password')
+                }
+                else {
+                    setPassError('');
+                }
 
             })
     };
@@ -76,8 +92,12 @@ const Login = () => {
                                 <span className="label-text">Email</span>
                             </label>
                             <input {...register("email", { required: true })} type="text" placeholder="Your email" className="input input-bordered w-full" />
+
                             {/* error showing */}
                             {errors.email && <span className='text-red-500 text-xs mt-1'>This field is required</span>}
+                            <span className='text-red-500 text-xs'>
+                                {emailError}
+                            </span>
                         </div>
 
                         <div className="form-control w-3/4 relative">
@@ -85,8 +105,13 @@ const Login = () => {
                                 <span className="label-text">Password</span>
                             </label>
                             <input {...register("password", { required: true })} type={passwordType} name='password' placeholder="password" className="input input-bordered pr-10" />
+
                             {/* error showing */}
                             {errors.password && <span className='text-red-500 text-xs mt-1'>This field is required</span>}
+                            <span className='text-red-500 text-xs'>
+                                {passError}
+                            </span>
+
                             <div className="absolute right-1 top-11 p-2 rounded-md" onClick={handlePassType}>
                                 {
                                     passwordType === 'password' ?
