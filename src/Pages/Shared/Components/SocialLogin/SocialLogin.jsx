@@ -15,12 +15,32 @@ const SocialLogin = () => {
             .then(result => {
                 const loggedUser = result.user;
                 console.log(loggedUser);
-                Swal.fire(
-                    'Good job!',
-                    'Successfully login by Google',
-                    'success'
-                );
-                navigate('/');
+                const saveUser = { name: loggedUser.displayName, email: loggedUser.email, image: loggedUser.photoURL };
+
+                fetch('http://localhost:5000/users', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(saveUser)
+
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        // console.log(data);
+
+                    })
+                Swal.fire({
+                    title: 'User Login Successful.',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
+                });
+
+                // navigate('/');
             })
             .catch(error => {
                 console.log(error)
