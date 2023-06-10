@@ -11,6 +11,8 @@ const Register = () => {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const navigate = useNavigate();
     const [passwordType, setPasswordType] = useState('password');
+    const [emailError, setEmailError] = useState('');
+
 
     const password = watch('password');
     const confirmPass = watch('confirmPass');
@@ -51,21 +53,21 @@ const Register = () => {
                     body: JSON.stringify(saveUser)
 
                 }).then(res => res.json())
-                .then(data => {
-                    if (data.insertedId) {
+                    .then(data => {
+                        if (data.insertedId) {
 
-                        Swal.fire({
-                            position: 'top-center',
-                            icon: 'success',
-                            title: 'User created successfully.',
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                        navigate('/');
-                    }
-                    console.log(data)
-                })
-               
+                            Swal.fire({
+                                position: 'top-center',
+                                icon: 'success',
+                                title: 'User created successfully.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            navigate('/');
+                        }
+                        console.log(data)
+                    })
+
                 // update profile
                 updateUserInfo(data.name, data.photo)
                     .then(() => {
@@ -79,7 +81,15 @@ const Register = () => {
             .catch(error => {
                 console.log(error);
 
-
+                if (error.message === 'Firebase: Error (auth/invalid-email).') {
+                    setEmailError('Please provide valid email format')
+                }
+                else if (error.message === 'Firebase: Error (auth/email-already-in-use).') {
+                    setEmailError('Already account created for this email')
+                }
+                else {
+                    setEmailError('');
+                }
             })
     };
 
@@ -87,7 +97,7 @@ const Register = () => {
 
     return (
         <div className='bg-[rgba(11,6,51,0.18)]'>
-            
+
             <div className="hero h-72" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1596464716127-f2a82984de30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80)' }}>
                 <div className="hero-overlay bg-opacity-60"></div>
                 <div className="hero-content text-center text-neutral-content">
@@ -123,6 +133,9 @@ const Register = () => {
                             <input {...register("email", { required: true })} type="text" placeholder="Your email" className="input input-bordered w-full" />
                             {/* error showing */}
                             {errors.email && <span className='text-red-500 text-xs mt-1'>This field is required</span>}
+                            {
+                                emailError && <span className='text-red-500 text-xs mt-1'>{emailError} </span>
+                            }
                         </div>
                     </div>
 

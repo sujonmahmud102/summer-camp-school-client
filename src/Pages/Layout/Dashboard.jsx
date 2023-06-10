@@ -53,12 +53,11 @@ const Dashboard = () => {
                         </li>
                         <li>
                             <NavLink
-                                to='/dashboard/'
+                                to='/dashboard/manageClasses'
                                 className={({ isActive }) => isActive ? "font-bold text-white" : ""}
-                            ><FaHome></FaHome> Admin Home
+                            ><FaClipboardList></FaClipboardList> Manage Classes
                             </NavLink>
                         </li>
-                        <li><a><FaClipboardList></FaClipboardList> Manage Classes</a></li>
                         <li>
                             <NavLink
                                 to='/dashboard/manageUsers'

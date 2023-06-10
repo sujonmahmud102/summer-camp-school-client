@@ -89,7 +89,7 @@ const Navbar = () => {
                         <button onClick={handleLogOUt} className='md:btn btn btn-sm'>Logout</button>
                     </> :
                         <Link to='/login'>
-                            <button className='md:btn md:btn-secondary btn-secondary py-1 px-2 rounded-md'>Login</button>
+                            <button className='md:btn md:btn-error btn-error py-1 px-2 rounded-md'>Login</button>
                         </Link>
                 }
             </div>
