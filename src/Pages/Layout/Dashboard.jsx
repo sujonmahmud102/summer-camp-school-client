@@ -25,7 +25,7 @@ const Dashboard = () => {
 
                     {/* navbar */}
 
-                    <div className="navbar bg-base-200 px-10">
+                    <div className="navbar-start md:navbar bg-base-200 px-10">
                         <div className="flex-1">
                             <a className="btn btn-ghost normal-case text-xl">Dashboard</a>
                         </div>
@@ -49,7 +49,7 @@ const Dashboard = () => {
 
                     {/* Page content here */}
                     <Outlet></Outlet>
-                    <label htmlFor="my-drawer-2" className="mt-16 btn btn-error drawer-button lg:hidden">Open Menu</label>
+                    <label htmlFor="my-drawer-2" className="btn btn-error drawer-button lg:hidden absolute top-0 left-0">Open Menu</label>
 
                 </div>
                 <div className="drawer-side">
