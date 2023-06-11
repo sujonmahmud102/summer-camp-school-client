@@ -22,10 +22,10 @@ const Instructors = () => {
 
             </div>
 
-            <div className="overflow-x-auto h-[500px] w-full px-12 py-8">
+            <div className="overflow-x-auto w-full px-12 my-8">
                 <table className="table w-full">
                     {/* head */}
-                    <thead className='bg-error font-bold text-lg'>
+                    <thead className='sticky top-0 bg-error font-bold text-lg'>
                         <tr>
                             <th className=''>#</th>
                             <th className=''>Image</th>

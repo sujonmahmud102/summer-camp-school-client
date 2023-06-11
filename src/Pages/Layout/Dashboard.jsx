@@ -1,5 +1,6 @@
-import logo from '../../../public/logo.png'
-import { FaClipboardList, FaHome, FaUsers } from 'react-icons/fa';
+import logo from '../../assets/logo.png';
+import { FaCheckSquare, FaClipboardList, FaElementor, FaHome, FaMoneyCheck, FaPeopleArrows, FaPlusCircle, FaUserFriends, FaUsers, FaWallet } from 'react-icons/fa';
+import { } from "react-icons/bi";
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth/useAuth';
 import { useQuery } from 'react-query';
@@ -61,22 +62,77 @@ const Dashboard = () => {
                                 <Link to='/dashboard/' className="btn btn-ghost "><img className='w-36 h-10 ' src={logo} alt="" /> </Link>
                             </div>
                         </li>
-                        <li>
-                            <NavLink
-                                to='/dashboard/manageClasses'
-                                className={({ isActive }) => isActive ? "font-bold text-white" : ""}
-                            ><FaClipboardList></FaClipboardList> Manage Classes
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink
-                                to='/dashboard/manageUsers'
-                                className={({ isActive }) => isActive ? "font-bold text-white" : ""}
-                            ><FaUsers></FaUsers> Manage Users
-                            </NavLink>
-                        </li>
+                        {/* dynamic route */}
+
+                        {
+                            currentUser?.role === 'Admin' && <>
+                                {/* admin route */}
+                                <li>
+                                    <NavLink
+                                        to='/dashboard/manageClasses'
+                                        className={({ isActive }) => isActive ? "font-bold text-white" : ""}
+                                    ><FaClipboardList></FaClipboardList> Manage Classes
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        to='/dashboard/manageUsers'
+                                        className={({ isActive }) => isActive ? "font-bold text-white" : ""}
+                                    ><FaUsers></FaUsers> Manage Users
+                                    </NavLink>
+                                </li>
+                            </>
+                        }
+
+                        {/* instructors route */}
+
+                        {
+                            currentUser?.role === 'Instructor' && <>
+                                <li>
+                                    <NavLink
+                                        to='/dashboard/addAClass'
+                                        className={({ isActive }) => isActive ? "font-bold text-white" : ""}
+                                    ><FaPlusCircle></FaPlusCircle> Add A Class
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        to='/dashboard/myClasses'
+                                        className={({ isActive }) => isActive ? "font-bold text-white" : ""}
+                                    ><FaClipboardList></FaClipboardList> My Classes
+                                    </NavLink>
+                                </li>
+                            </>
+                        }
 
 
+                        {/* student route */}
+                        {
+                            !currentUser?.role &&
+                            (<>
+                                <li>
+                                    <NavLink
+                                        to='/dashboard/selectedClasses'
+                                        className={({ isActive }) => isActive ? "font-bold text-white" : ""}
+                                    ><FaCheckSquare></FaCheckSquare> My Selected Classes
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        to='/dashboard/enrolledClasses'
+                                        className={({ isActive }) => isActive ? "font-bold text-white" : ""}
+                                    ><FaMoneyCheck></FaMoneyCheck> My Enrolled Classes
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        to='/dashboard/paymentHistory'
+                                        className={({ isActive }) => isActive ? "font-bold text-white" : ""}
+                                    ><FaWallet></FaWallet> Payment History
+                                    </NavLink>
+                                </li>
+                            </>)
+                        }
 
                         <hr className="border border-white my-10" />
 
@@ -85,6 +141,20 @@ const Dashboard = () => {
                                 to='/'
                                 className={({ isActive }) => isActive ? "font-bold text-white" : ""}
                             ><FaHome></FaHome> Home
+                            </NavLink>
+                        </li>
+                        <li className='mr-4'>
+                            <NavLink
+                                to='/instructors'
+                                className={({ isActive }) => isActive ? "font-bold text-error" : ""}
+                            ><FaUserFriends></FaUserFriends> Instructors
+                            </NavLink>
+                        </li>
+                        <li className='mr-4'>
+                            <NavLink
+                                to='/classes'
+                                className={({ isActive }) => isActive ? "font-bold text-error" : ""}
+                            ><FaElementor></FaElementor> Classes
                             </NavLink>
                         </li>
                     </ul>

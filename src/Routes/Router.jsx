@@ -8,6 +8,11 @@ import Classes from '../Pages/Classes/Classes';
 import Dashboard from '../Pages/Layout/Dashboard';
 import ManageUsers from '../Pages/Dashboard/Admin/ManageUsers';
 import ManageClasses from '../Pages/Dashboard/Admin/ManageClasses';
+import MySelectedClasses from '../Pages/Dashboard/Student/MySelectedClasses';
+import MyEnrolledClasses from '../Pages/Dashboard/Student/MyEnrolledClasses';
+import PaymentHistory from '../Pages/Dashboard/Student/PaymentHistory';
+import AddClass from '../Pages/Dashboard/Instructors/AddClass';
+import MyClasses from '../Pages/Dashboard/Instructors/MyClasses';
 
 
 
@@ -42,6 +47,7 @@ const router = createBrowserRouter([
         path: '/dashboard',
         element: <Dashboard></Dashboard>,
         children: [
+            // for admin
             {
                 path: '/dashboard/manageClasses',
                 element: <ManageClasses></ManageClasses>
@@ -49,6 +55,28 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/manageUsers',
                 element: <ManageUsers></ManageUsers>
+            },
+            // for instructors
+            {
+                path: '/dashboard/addAClass',
+                element: <AddClass></AddClass>
+            },
+            {
+                path: '/dashboard/myClasses',
+                element: <MyClasses></MyClasses>
+            },
+            // for studentF
+            {
+                path: '/dashboard/selectedClasses',
+                element: <MySelectedClasses></MySelectedClasses>
+            },
+            {
+                path: '/dashboard/enrolledClasses',
+                element: <MyEnrolledClasses></MyEnrolledClasses>
+            },
+            {
+                path: '/dashboard/paymentHistory',
+                element: <PaymentHistory></PaymentHistory>
             }
         ]
     }
