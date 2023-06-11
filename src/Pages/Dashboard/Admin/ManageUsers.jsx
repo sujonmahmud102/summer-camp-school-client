@@ -61,6 +61,7 @@ const ManageUsers = () => {
                     <thead className='sticky top-0 bg-error font-bold text-lg'>
                         <tr>
                             <th className=''>#</th>
+                            <th className=''>Image</th>
                             <th className=''>Name</th>
                             <th className=''>Email</th>
                             <th className=''>Role</th>
@@ -76,6 +77,9 @@ const ManageUsers = () => {
                                     {index + 1}
                                 </td>
                                 <td>
+                                    <img className='w-12 h-12 rounded-2xl' src={user.image} alt="" />
+                                </td>
+                                <td>
                                     {user.name}
                                 </td>
                                 <td>
@@ -86,15 +90,16 @@ const ManageUsers = () => {
                                 </td>
                                 <td className="text-center">
                                     {
-                                        user?.role === 'Admin' ? <button className="btn btn-ghost bg-error text-white" disabled="disabled">Make Admin</button>
+                                        user?.role === 'Admin' ? <button className="btn btn-sm rounded-md btn-ghost bg-error text-white" disabled="disabled">Make Admin</button>
                                             :
-                                            <button onClick={() => handleMakeAdmin(user)} className="btn btn-ghost bg-error  text-white">Make Admin</button>
+                                            <button onClick={() => handleMakeAdmin(user)} className="btn btn-sm rounded-md btn-ghost bg-error  text-white">Make Admin</button>
                                     }
                                     {
                                         user?.role === 'Instructor' ?
-                                            <button className="btn btn-ghost bg-gray-600 text-white ml-4" disabled="disabled">Make Instructor</button>
+                                            <button className="btn btn-sm 
+                                            rounded-md btn-ghost bg-gray-600 text-white ml-4" disabled="disabled">Make Instructor</button>
                                             :
-                                            <button onClick={() => handleMakeInstructor(user)} className="btn btn-ghost bg-gray-600 text-white ml-4">Make Instructor</button>
+                                            <button onClick={() => handleMakeInstructor(user)} className="btn btn-sm rounded-md btn-ghost bg-gray-600 text-white ml-4">Make Instructor</button>
                                     }
 
                                 </td>
