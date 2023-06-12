@@ -1,5 +1,6 @@
 import React from 'react';
 import { useQuery } from 'react-query';
+import Swal from 'sweetalert2';
 
 const ManageClasses = () => {
     const { data: classes = [], refetch } = useQuery(['classes'], async () => {
@@ -8,9 +9,52 @@ const ManageClasses = () => {
         return data;
     });
 
+
+    // handle classes approve
+    const handleClassApproval = cls => {
+        fetch(`http://localhost:5000/classes/approve/${cls._id}`, {
+            method: 'PATCH'
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.modifiedCount) {
+                    refetch();
+                    Swal.fire({
+                        position: 'top-center',
+                        icon: 'success',
+                        title: `Class approved done`,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            })
+    }
+
+    // handle classes denied
+    const handleClassDenied = cls => {
+        fetch(`http://localhost:5000/classes/deny/${cls._id}`, {
+            method: 'PATCH'
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.modifiedCount) {
+                    refetch();
+                    Swal.fire({
+                        position: 'top-center',
+                        icon: 'success',
+                        title: `Class denied`,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            })
+    }
+
     return (
         <div className='w-full px-16'>
-            <h3 className="text-3xl text-center font-semibold my-4">Total classes: {classes.length}</h3>
+            <h3 className="text-3xl text-center font-semibold my-4">Total Classes: {classes.length}</h3>
             <div className="overflow-x-auto h-[500px] w-full mt-4">
                 <table className="table w-full">
                     {/* head */}
@@ -36,7 +80,7 @@ const ManageClasses = () => {
                                     {index + 1}
                                 </td>
                                 <td>
-                                    <img className='w-8 h-8 rounded-md' src={cls.classImage} alt="" />
+                                    <img className='w-8 h-8 rounded-md ' src={cls.classImage} alt="" />
                                 </td>
                                 <td>
                                     {cls.className}
@@ -53,21 +97,36 @@ const ManageClasses = () => {
                                 <td>
                                     ${cls.price}
                                 </td>
-                                <td className='text-yellow-400'>
-                                    {cls.status ? cls.status : "Pending"}
+                                <td>
+                                    {
+                                        !cls?.status && <span className='text-yellow-500 font-bold'>
+                                            Pending
+                                        </span>
+                                    }
+                                    {
+                                        cls?.status == 'approved' && <span className='text-green-500 font-bold'>
+                                            Approved
+                                        </span>
+                                    }
+                                    {
+                                        cls?.status === 'denied' && <span className='text-red-500 font-bold'>
+                                            Denied
+                                        </span>
+                                    }
+
                                 </td>
                                 <td className="text-center">
                                     {
-                                        cls?.role === 'Admin' ? <button className="btn btn-xs rounded-md btn-ghost bg-error text-white" disabled="disabled">Approve</button>
+                                        (cls?.status === 'approved' || cls?.status === 'denied') ? <button className="btn btn-xs rounded-md btn-ghost bg-error text-white" disabled="disabled">Approve</button>
                                             :
-                                            <button className="btn btn-xs rounded-md btn-ghost bg-green-500  text-white">Approve</button>
+                                            <button onClick={() => handleClassApproval(cls)} className="btn btn-xs rounded-md btn-ghost bg-green-500  text-white">Approve</button>
                                     }
                                     {
-                                        cls?.role === 'Instructor' ?
+                                        (cls?.status === 'approved' || cls?.status === 'denied') ?
                                             <button className="btn btn-xs 
                                         rounded-md btn-ghost bg-red-500 text-white ml-2" disabled="disabled">Deny</button>
                                             :
-                                            <button className="btn btn-xs rounded-md btn-ghost bg-red-500 text-white ml-2">Deny</button>
+                                            <button onClick={() => handleClassDenied(cls)} className="btn btn-xs rounded-md btn-ghost bg-red-500 text-white ml-2">Deny</button>
                                     }
                                     {
                                         cls?.role === 'Instructor' ?
