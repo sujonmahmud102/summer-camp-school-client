@@ -181,17 +181,7 @@ const ManageClasses = () => {
                                             :
                                             <button onClick={() => handleClassDenied(cls)} className="btn btn-xs rounded-md btn-ghost bg-red-500 text-white ml-2">Deny</button>
                                     }
-                                    {
-                                        cls?.feedback ?
-                                            <button className="btn btn-xs 
-                                        rounded-md btn-ghost bg-gray-600 text-white ml-2" disabled="disabled">Feedback</button>
-                                            :
-                                            <button onClick={() => handleFeedback(cls)} className="btn btn-xs rounded-md btn-ghost bg-gray-600 text-white ml-2">Feedback</button>
-                                    }
-
-
-                                    {/* modal */}
-                                    {/* Open the modal using ID.showModal() method */}
+                                    <button onClick={() => handleFeedback(cls)} className="btn btn-xs rounded-md btn-ghost bg-gray-600 text-white ml-2">Feedback</button>
 
                                 </td>
 
