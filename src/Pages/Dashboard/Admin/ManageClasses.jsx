@@ -52,6 +52,59 @@ const ManageClasses = () => {
             })
     }
 
+    // handle feedback
+    const handleFeedback = (cls) => {
+        Swal.fire({
+            title: `Class name: ${cls.className}`,
+            imageUrl: `${cls.classImage}`,
+            imageWidth: 300,
+            imageHeight: 150,
+            imageAlt: `${cls.className}`,
+            input: 'text',
+            inputLabel: `Instructor name: ${cls.instructorName}`,
+            inputPlaceholder: 'Enter your feedback',
+            inputAttributes: {
+                required: 'required'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Submit',
+            inputValidator: (value) => {
+                if (!value) {
+                    return 'Enter feedback';
+                }
+            }
+        }).then((result) => {
+            if (result.value) {
+                const feedback = result.value;
+                console.log(feedback);
+
+                fetch(`http://localhost:5000/classes/feedback/${cls._id}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        feedback: feedback
+                    })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data.modifiedCount) {
+                            // refetch();
+                            Swal.fire({
+                                position: 'top-center',
+                                icon: 'success',
+                                title: `Feedback sent successfully`,
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        }
+                    })
+            }
+        });
+    }
+
     return (
         <div className='w-full px-16'>
             <h3 className="text-3xl text-center font-semibold my-4">Total Classes: {classes.length}</h3>
@@ -129,12 +182,16 @@ const ManageClasses = () => {
                                             <button onClick={() => handleClassDenied(cls)} className="btn btn-xs rounded-md btn-ghost bg-red-500 text-white ml-2">Deny</button>
                                     }
                                     {
-                                        cls?.role === 'Instructor' ?
+                                        cls?.feedback ?
                                             <button className="btn btn-xs 
                                         rounded-md btn-ghost bg-gray-600 text-white ml-2" disabled="disabled">Feedback</button>
                                             :
-                                            <button className="btn btn-xs rounded-md btn-ghost bg-gray-600 text-white ml-2">Feedback</button>
+                                            <button onClick={() => handleFeedback(cls)} className="btn btn-xs rounded-md btn-ghost bg-gray-600 text-white ml-2">Feedback</button>
                                     }
+
+
+                                    {/* modal */}
+                                    {/* Open the modal using ID.showModal() method */}
 
                                 </td>
 
