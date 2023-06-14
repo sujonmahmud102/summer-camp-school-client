@@ -25,7 +25,7 @@ const Classes = () => {
 
            <div className='grid lg:grid-cols-3 gap-4 p-12'>
            {
-                classes.map((cls, index) => <div className="card w-96 bg-base-100 shadow-xl border border-red-500">
+                classes.map((cls, index) => <div key={index}  className="card w-96 bg-base-100 shadow-xl border border-red-500">
                     <figure className="px-10 pt-10"><img className='rounded-xl' src={cls.classImage} alt="" /></figure>
                     <div className="card-body">
                         <h2 className="card-title">{cls.className}</h2>

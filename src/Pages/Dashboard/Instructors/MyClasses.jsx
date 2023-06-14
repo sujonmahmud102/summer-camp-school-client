@@ -3,13 +3,12 @@ import { useQuery } from 'react-query';
 import useAuth from '../../../hooks/useAuth/useAuth';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
-import { FaEdit } from 'react-icons/fa';
 
 const MyClasses = () => {
     const { user } = useAuth();
 
 
-    const { data: classes = [] } = useQuery(['classes'], async () => {
+    const { data: classes = [], refetch } = useQuery(['classes'], async () => {
         const res = await fetch(`http://localhost:5000/classes?instructorEmail=${user?.email}`)
         const data = await res.json();
         return data;
@@ -21,6 +20,39 @@ const MyClasses = () => {
             html: `Message: ${cls.feedback ? `<span style="color: red;">${cls.feedback} </span>` : 'No message from admin'}`,
         })
 
+    }
+
+    // handle delete
+    const handleDeleteItem = id => {
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                fetch(`http://localhost:5000/classes/${id}`, {
+                    method: 'DELETE'
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data.deletedCount > 0) {
+                            Swal.fire(
+                                'Deleted!',
+                                'Your class has been deleted.',
+                                'success'
+                            );
+                            refetch();
+                        };
+                    })
+            }
+        })
     }
 
     return (
@@ -85,7 +117,7 @@ const MyClasses = () => {
                                     <Link to={`/dashboard/updateClass/${cls._id}`}><button className="btn btn-xs rounded-md btn-ghost bg-cyan-500 text-white">Update</button>  </Link>
                                 </td>
                                 <td>
-                                    <button className="btn btn-xs rounded-md btn-ghost bg-red-500  text-white">Delete</button>
+                                    <button onClick={() => handleDeleteItem(cls._id)} className="btn btn-xs rounded-md btn-ghost bg-red-500  text-white">Delete</button>
                                 </td>
 
                             </tr>)

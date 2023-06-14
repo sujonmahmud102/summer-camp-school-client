@@ -6,8 +6,6 @@ const UpdateClass = () => {
 
     const cls = useLoaderData();
 
-
-
     const { _id, className, classImage, seats, price } = cls;
 
     // handle update class
