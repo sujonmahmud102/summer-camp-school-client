@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useQuery } from 'react-query';
 import useAuth from '../../../hooks/useAuth/useAuth';
 import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom';
+import { FaEdit } from 'react-icons/fa';
 
 const MyClasses = () => {
     const { user } = useAuth();
 
-    const { data: classes = [], refetch } = useQuery(['classes'], async () => {
+
+    const { data: classes = [] } = useQuery(['classes'], async () => {
         const res = await fetch(`http://localhost:5000/classes?instructorEmail=${user?.email}`)
         const data = await res.json();
         return data;
@@ -15,7 +18,7 @@ const MyClasses = () => {
     const handleShowFeedback = (cls) => {
         Swal.fire({
             title: 'Feedback From Admin',
-            text: `Message: ${cls?.feedback? cls?.feedback: 'No message from admin'}`,
+            html: `Message: ${cls.feedback ? `<span style="color: red;">${cls.feedback} </span>` : 'No message from admin'}`,
         })
 
     }
@@ -79,7 +82,7 @@ const MyClasses = () => {
                                     <button onClick={() => handleShowFeedback(cls)} className="btn btn-xs rounded-md btn-ghost bg-black  text-white">Show Detail</button>
                                 </td>
                                 <td>
-                                    <button className="btn btn-xs rounded-md btn-ghost bg-cyan-500 text-white">Update</button>
+                                    <Link to={`/dashboard/updateClass/${cls._id}`}><button className="btn btn-xs rounded-md btn-ghost bg-cyan-500 text-white">Update</button>  </Link>
                                 </td>
                                 <td>
                                     <button className="btn btn-xs rounded-md btn-ghost bg-red-500  text-white">Delete</button>

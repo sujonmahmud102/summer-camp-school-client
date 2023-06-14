@@ -12,8 +12,8 @@ const AddClass = () => {
         const classImage = form.classImage.value;
         const instructorName = form.instructorName.value;
         const instructorEmail = form.instructorEmail.value;
-        const seats = form.seats.value;
-        const price = form.price.value;
+        const seats = parseFloat(form.seats.value);
+        const price = parseFloat(form.price.value);
 
         const saveClase = { className, classImage, instructorName, instructorEmail, seats, price }
         console.log(saveClase);

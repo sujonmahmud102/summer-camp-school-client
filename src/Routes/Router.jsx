@@ -13,6 +13,7 @@ import MyEnrolledClasses from '../Pages/Dashboard/Student/MyEnrolledClasses';
 import PaymentHistory from '../Pages/Dashboard/Student/PaymentHistory';
 import AddClass from '../Pages/Dashboard/Instructors/AddClass';
 import MyClasses from '../Pages/Dashboard/Instructors/MyClasses';
+import UpdateClass from '../Pages/Dashboard/Instructors/UpdateClass';
 
 
 
@@ -77,7 +78,12 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/paymentHistory',
                 element: <PaymentHistory></PaymentHistory>
-            }
+            },
+            {
+                path: '/dashboard/updateClass/:id',
+                element: <UpdateClass></UpdateClass>,
+                loader: ({ params }) => fetch(`http://localhost:5000/classes/${params.id}`)
+            },
         ]
     }
 ])

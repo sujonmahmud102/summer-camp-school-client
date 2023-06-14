@@ -86,10 +86,10 @@ const Navbar = () => {
                         <div className="tooltip tooltip-left" data-tip={user?.displayName}>
                             <img className='rounded-full w-6 h-6 md:w-10 md:h-10 mr-3' src={user?.photoURL} alt="User image" />
                         </div>
-                        <button onClick={handleLogOUt} className='btn btn-sm'>Logout</button>
+                        <button onClick={handleLogOUt} className='btn btn-md'>Logout</button>
                     </> :
                         <Link to='/login'>
-                            <button className='md:btn md:btn-error btn-error py-1 px-2 rounded-md'>Login</button>
+                            <button className='btn btn-md btn-error'>Login</button>
                         </Link>
                 }
             </div>
