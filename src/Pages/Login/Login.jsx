@@ -15,6 +15,7 @@ const Login = () => {
     const [emailError, setEmailError] = useState('');
     const [passError, setPassError] = useState('');
     const navigate = useNavigate();
+    const location = useLocation();
 
 
     const onSubmit = data => {
@@ -29,7 +30,7 @@ const Login = () => {
                     'success'
                 );
 
-                navigate('/')
+                navigate(from, { replace: true });
 
             })
             .catch(error => {
