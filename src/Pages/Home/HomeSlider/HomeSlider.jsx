@@ -20,10 +20,10 @@ const HomeSlider = () => {
                                 <h1 className="mb-5 text-5xl font-bold uppercase">Unleash the Adventure!</h1>
                                 <p>
                                     Join us for an unforgettable summer of outdoor exploration, creative workshops, and exciting games at our Kids Summer Camp.
-
-                                    {/* todo add a button */}
-                                    Enroll now!
                                 </p>
+                                <Link to='/classes'> <button className="btn btn-error mt-5">Enroll now !</button>
+                                </Link>
+
                             </div>
                         </div>
 
@@ -39,9 +39,11 @@ const HomeSlider = () => {
                                 <p>
                                     Discover the joy of learning through hands-on experiments, art classes, and interactive storytelling at our Kids Summer Camp.
 
-                                    {/* todo add a button */}
-                                    Register today. !
                                 </p>
+
+                                <Link to='/classes'> <button className="btn btn-error mt-5">Register today !</button>
+                                </Link>
+
                             </div>
                         </div>
 
@@ -56,11 +58,13 @@ const HomeSlider = () => {
                             <div className="max-w-lg">
                                 <h1 className="mb-5 text-5xl font-bold uppercase">Friendship and Laughter!</h1>
                                 <p>
-                                    Create lifelong friendships and share laughter-filled moments at our Kids Summer Camp. Secure your spot and embrace the summer of fun and friendship
+                                    Create lifelong friendships and share laughter-filled moments at our Kids Summer Camp. Secure your spot and embrace the summer of fun and friendship.
 
-                                    {/* todo add a button */}
-                                    Register today. !
                                 </p>
+
+                                <Link to='/classes'> <button className="btn btn-error mt-5">Enroll now !</button>
+                                </Link>
+
                             </div>
                         </div>
 

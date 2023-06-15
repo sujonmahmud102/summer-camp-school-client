@@ -14,6 +14,7 @@ import PaymentHistory from '../Pages/Dashboard/Student/PaymentHistory';
 import AddClass from '../Pages/Dashboard/Instructors/AddClass';
 import MyClasses from '../Pages/Dashboard/Instructors/MyClasses';
 import UpdateClass from '../Pages/Dashboard/Instructors/UpdateClass';
+import PrivateRoute from './PrivateRoute';
 
 
 
@@ -46,7 +47,7 @@ const router = createBrowserRouter([
     },
     {
         path: '/dashboard',
-        element: <Dashboard></Dashboard>,
+        element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
         children: [
             // for admin
             {
@@ -66,7 +67,7 @@ const router = createBrowserRouter([
                 path: '/dashboard/myClasses',
                 element: <MyClasses></MyClasses>
             },
-            // for studentF
+            // for student
             {
                 path: '/dashboard/selectedClasses',
                 element: <MySelectedClasses></MySelectedClasses>

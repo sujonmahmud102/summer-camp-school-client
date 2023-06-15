@@ -17,6 +17,7 @@ const Login = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
+    const from = location.state?.from?.pathname || '/';
 
     const onSubmit = data => {
         console.log(data);
@@ -24,11 +25,13 @@ const Login = () => {
             .then(result => {
                 const loggedUser = result.user;
                 console.log(loggedUser);
-                Swal.fire(
-                    'Good job!',
-                    'Successfully login',
-                    'success'
-                );
+                Swal.fire({
+                    position: 'top-center',
+                    icon: 'success',
+                    title: 'User Login Successful.',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
 
                 navigate(from, { replace: true });
 

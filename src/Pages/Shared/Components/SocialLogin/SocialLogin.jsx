@@ -2,12 +2,13 @@ import React from 'react';
 import { FaGoogle } from "react-icons/fa";
 import useAuth from '../../../../hooks/useAuth/useAuth';
 import Swal from 'sweetalert2';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const SocialLogin = () => {
     const navigate = useNavigate();
+    const location = useLocation();
 
-
+    const from = location.state?.from?.pathname || '/';
 
     const { createdByGoogle } = useAuth();
     const registerByGoogle = () => {
@@ -31,16 +32,15 @@ const SocialLogin = () => {
 
                     })
                 Swal.fire({
+                    position: 'top-center',
+                    icon: 'success',
                     title: 'User Login Successful.',
-                    showClass: {
-                        popup: 'animate__animated animate__fadeInDown'
-                    },
-                    hideClass: {
-                        popup: 'animate__animated animate__fadeOutUp'
-                    }
+                    showConfirmButton: false,
+                    timer: 1500
                 });
+                navigate(from, { replace: true });
 
-                // navigate('/');
+
             })
             .catch(error => {
                 console.log(error)

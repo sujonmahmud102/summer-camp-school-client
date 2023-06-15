@@ -8,9 +8,10 @@ const PrivateRoute = ({ children }) => {
 
 
     if (loading) {
-        return <progress className="progress w-56"></progress>
+        return <div className='flex items-center justify-center'>
+            <progress className="progress w-56"></progress>
+        </div>;
     }
-
     if (user) {
         return children;
     }
