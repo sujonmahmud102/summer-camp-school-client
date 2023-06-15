@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useQuery } from 'react-query';
 import useAuth from '../../../hooks/useAuth/useAuth';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 
 
@@ -14,7 +15,40 @@ const MySelectedClasses = () => {
         return data;
     });
 
-    console.log(classes)
+    // handle delete
+    const handleDeleteItem = id => {
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                fetch(`http://localhost:5000/selectedClasses/${id}`, {
+                    method: 'DELETE'
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data.deletedCount > 0) {
+                            Swal.fire(
+                                'Deleted!',
+                                'Your class has been deleted.',
+                                'success'
+                            );
+                            refetch();
+                        };
+                    })
+            }
+        })
+    }
+
+
     return (
         <div className='w-full px-16'>
             <h3 className="text-3xl text-center font-semibold my-4"> My Selected Classses : {classes.length}</h3>
@@ -51,7 +85,9 @@ const MySelectedClasses = () => {
 
                                 </td>
                                 <td>
-                                    <Link ><button className="btn btn-xs rounded-md btn-ghost bg-indigo-500 text-white">Pay</button>  </Link>
+                                    <Link to={`/dashboard/payment?price=${cls.price}&name=${cls.name}`}>
+                                        <button className="btn btn-xs rounded-md btn-ghost bg-indigo-500 text-white">Pay</button>
+                                    </Link>
                                 </td>
                                 <td>
                                     <button onClick={() => handleDeleteItem(cls._id)} className="btn btn-xs rounded-md btn-ghost bg-red-500  text-white">Delete</button>

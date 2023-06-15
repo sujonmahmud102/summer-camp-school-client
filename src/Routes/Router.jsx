@@ -15,6 +15,7 @@ import AddClass from '../Pages/Dashboard/Instructors/AddClass';
 import MyClasses from '../Pages/Dashboard/Instructors/MyClasses';
 import UpdateClass from '../Pages/Dashboard/Instructors/UpdateClass';
 import PrivateRoute from './PrivateRoute';
+import Payment from '../Pages/Dashboard/Student/Payment';
 
 
 
@@ -84,6 +85,10 @@ const router = createBrowserRouter([
                 path: '/dashboard/updateClass/:id',
                 element: <UpdateClass></UpdateClass>,
                 loader: ({ params }) => fetch(`http://localhost:5000/classes/${params.id}`)
+            },
+            {
+                path: '/dashboard/payment',
+                element: <Payment></Payment>
             },
         ]
     }
