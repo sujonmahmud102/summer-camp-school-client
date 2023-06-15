@@ -16,6 +16,7 @@ import MyClasses from '../Pages/Dashboard/Instructors/MyClasses';
 import UpdateClass from '../Pages/Dashboard/Instructors/UpdateClass';
 import PrivateRoute from './PrivateRoute';
 import Payment from '../Pages/Dashboard/Student/Payment';
+import ErrorPage from '../Pages/ErrorPage/ErrorPage';
 
 
 
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
     {
         path: '/',
         element: <Main></Main>,
+        errorElement: <ErrorPage></ErrorPage>,
         children: [
             {
                 path: '/',
