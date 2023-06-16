@@ -4,11 +4,17 @@ import useAuth from '../../hooks/useAuth/useAuth';
 import Swal from 'sweetalert2';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import useAdmin from '../../hooks/useAdmin';
+import useInstructor from '../../hooks/useInstructor';
 
 const Classes = () => {
     const { user } = useAuth();
+    const [isAdmin] = useAdmin();
+    const [isInstructor] = useInstructor();
     const navigate = useNavigate();
     const location = useLocation();
+
+    // console.log(isAdmin)
 
     // carts
     const { data: carts = [], refetch } = useQuery(['carts'], async () => {
@@ -25,20 +31,6 @@ const Classes = () => {
         return data;
     });
 
-    // users
-    const { data: users = [] } = useQuery(['users'], async () => {
-        const res = await fetch('http://localhost:5000/users')
-        const data = await res.json();
-        return data;
-    });
-
-    const currentUser = users?.find(cUser => cUser.email === user?.email);
-
-    // user cart
-    const userCarts = carts.filter((cart) => cart.email === user?.email);
-    const userCartClassIds = userCarts.map((cart) => cart.id);
-
-    console.log(userCartClassIds)
 
     // handle add to cart
     const handleAddToCart = (cls) => {
@@ -94,7 +86,7 @@ const Classes = () => {
 
     return (
         <div className=''>
-             <Helmet>
+            <Helmet>
                 <title>Classes | Champion Sports School</title>
             </Helmet>
 
@@ -111,48 +103,33 @@ const Classes = () => {
 
             <div className='grid lg:grid-cols-4 gap-4 p-12'>
                 {
-                    classes.map((cls, index) => {
-                        const isClassInCart = userCartClassIds.includes(cls._id);
-                        const isSelectDisabled =
-                            currentUser?.role === 'Instructor' ||
-                            currentUser?.role === 'Admin' ||
-                            cls.seats === 0 ||
-                            isClassInCart;
-
-                        return (
-                            <div
-                                key={index}
-                                className={`card w-full bg-base-100 shadow-xl border border-error ${cls.seats === 0 ? 'bg-red-500' : ''
-                                    }`}
-                            >
-                                <figure className="px-10 pt-10">
-                                    <img className="rounded-xl" src={cls.classImage} alt="" />
-                                </figure>
-                                <div className="card-body">
-                                    <h2 className="card-title">{cls.className}</h2>
-                                    <p>Instructor: {cls.instructorName}</p>
-                                    <div className="flex justify-between">
-                                        <p>Seats: {cls.seats}</p>
-                                        <p>Price: ${cls.price}</p>
-                                    </div>
-                                    <div className="card-actions justify-center">
-                                        {currentUser?.role === 'Instructor' ||
-                                            currentUser?.role === 'Admin' ||
-                                            cls.seats === 0 ? (
+                    classes.map((cls, index) => <div key={index}>
+                        <div className={`card w-full h-96 bg-base-100 shadow-xl border border-error ${cls.seats === 0 ? 'bg-red-500' : ''}`}>
+                            <figure className="px-10 pt-10">
+                                <img className="rounded-xl" src={cls.classImage} alt="" />
+                            </figure>
+                            <div className="card-body">
+                                <h2 className="card-title">{cls.className}</h2>
+                                <p>Instructor: {cls.instructorName}</p>
+                                <div className="flex justify-between">
+                                    <p>Seats: {cls.seats}</p>
+                                    <p>Price: ${cls.price}</p>
+                                </div>
+                                <div className="card-actions justify-center">
+                                    {
+                                        (isAdmin || isInstructor || cls.seats === 0) ? (
                                             <button disabled className="btn btn-sm btn-ghost text-white bg-error">
                                                 Select
                                             </button>
                                         ) : (
-                                            <button disabled={isSelectDisabled} onClick={() => handleAddToCart(cls)} className="btn btn-sm btn-ghost text-white bg-error">
+                                            <button onClick={() => handleAddToCart(cls)} className="btn btn-sm btn-ghost text-white bg-error">
                                                 Select
                                             </button>
                                         )}
-                                    </div>
                                 </div>
                             </div>
-
-                        )
-                    })}
+                        </div>
+                    </div>)}
             </div>
 
 
