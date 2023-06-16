@@ -20,7 +20,7 @@ const Login = () => {
     const from = location.state?.from?.pathname || '/';
 
     const onSubmit = data => {
-        console.log(data);
+        // console.log(data);
         signInByEmailPass(data.email, data.password)
             .then(result => {
                 const loggedUser = result.user;

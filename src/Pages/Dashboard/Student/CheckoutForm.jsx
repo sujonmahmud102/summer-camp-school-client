@@ -1,24 +1,28 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { useEffect, useState } from 'react';
 import './CheckoutForm.css'
+import useAuth from '../../../hooks/useAuth/useAuth';
 
 
 const CheckoutForm = ({ price }) => {
+    const { user } = useAuth();
     const stripe = useStripe();
     const elements = useElements();
     const [cardError, setCardError] = useState('');
     const [clientSecret, setClientSecret] = useState("");
 
-console.log(clientSecret)
+    console.log(clientSecret)
 
     useEffect(() => {
 
-        fetch("/create-payment-intent", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(price),
-        })
-            .then((res) => res.json())
+        fetch("http://localhost:5000/create-payment-intent", {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(price)
+
+        }).then(res => res.json())
             .then((data) => setClientSecret(data.clientSecret));
     }, []);
 
@@ -49,6 +53,24 @@ console.log(clientSecret)
             console.log('[PaymentMethod]', paymentMethod);
         }
 
+        const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(
+            clientSecret,
+            {
+                payment_method: {
+                    card: card,
+                    billing_details: {
+                        email: user?.email || 'unknown',
+                        name: user?.displayName || 'anonymous'
+                    },
+                },
+            },
+        );
+
+        if (confirmError) {
+            console.log(confirmError);
+        }
+        console.log('payment intent', paymentIntent)
+
     }
 
     return (
@@ -72,7 +94,7 @@ console.log(clientSecret)
                         },
                     }}
                 />
-                <button className='btn btn-ghost bg-blue-500 text-white w-1/6 mt-5' type="submit" disabled={!stripe}>
+                <button className='btn btn-ghost bg-blue-500 text-white w-1/6 mt-5' type="submit" disabled={!stripe || !clientSecret}>
                     Pay
                 </button>
             </form>

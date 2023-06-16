@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import app from "../firebase/firebase.config";
 import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
+import axios from "axios";
 
 const auth = getAuth(app);
 
@@ -35,7 +36,20 @@ const AuthProvider = ({ children }) => {
         const unsubscribe = onAuthStateChanged(auth, (loggedUser) => {
             // console.log('logged user', loggedUser);
             setUser(loggedUser);
-            setLoading(false);
+
+            // set and get jwt token
+            if(loggedUser){
+                axios.post('http://localhost:5000/jwt', {email: loggedUser.email})
+                .then(data =>{
+                  
+                    localStorage.setItem('access-token', data.data.token)
+                    setLoading(false);
+                })
+            }
+            else{
+                localStorage.removeItem('access-token')
+            }
+            
         })
         return () => {
             unsubscribe();
