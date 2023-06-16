@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { useQuery } from 'react-query';
 
 const Instructors = () => {
@@ -10,13 +11,16 @@ const Instructors = () => {
 
     return (
         <div className=''>
+            <Helmet>
+                <title>Instructors | Champion Sports School</title>
+            </Helmet>
 
             <div className="hero h-72" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1596464716127-f2a82984de30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80)' }}>
                 <div className="hero-overlay bg-opacity-60"></div>
                 <div className="hero-content text-center text-neutral-content">
                     <div className="max-w-md">
                         <h1 className="mb-5 text-7xl font-bold uppercase">Instructors</h1>
-                       <h4 className='text-2xl font-semibold'>Total Instructors: {users.length}</h4>
+                        <h4 className='text-2xl font-semibold'>Total Instructors: {users.length}</h4>
                     </div>
                 </div>
 

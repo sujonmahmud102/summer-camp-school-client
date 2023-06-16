@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { FaTrashAlt, FaUsers } from 'react-icons/fa';
 import { useQuery } from 'react-query';
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 const ManageUsers = () => {
+    const [axiosSecure] = useAxiosSecure();
     const { data: users = [], refetch } = useQuery(['users'], async () => {
-        const res = await fetch('http://localhost:5000/users')
-        const data = await res.json();
-        return data;
+        const res = await axiosSecure.get('/users')
+        return res.data;
     });
 
     // handle making admin

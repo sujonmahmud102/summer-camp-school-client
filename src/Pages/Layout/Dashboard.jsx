@@ -4,6 +4,7 @@ import { } from "react-icons/bi";
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth/useAuth';
 import { useQuery } from 'react-query';
+import { Helmet } from 'react-helmet';
 
 const Dashboard = () => {
     const { user } = useAuth();
@@ -13,12 +14,16 @@ const Dashboard = () => {
         const data = await res.json();
         return data;
     });
- 
+
+    console.log(users)
     const currentUser = users?.find(cUser => cUser.email === user?.email);
 
 
     return (
         <div>
+            <Helmet>
+                <title>Dashboard | Champion Sports School</title>
+            </Helmet>
             <div className="drawer lg:drawer-open">
                 <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
                 <div className="drawer-content flex flex-col items-center">

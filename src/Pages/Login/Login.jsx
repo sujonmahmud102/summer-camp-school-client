@@ -5,6 +5,7 @@ import SocialLogin from '../Shared/Components/SocialLogin/SocialLogin';
 import { useForm } from 'react-hook-form';
 import useAuth from '../../hooks/useAuth/useAuth';
 import Swal from 'sweetalert2';
+import { Helmet } from 'react-helmet';
 
 
 
@@ -70,6 +71,11 @@ const Login = () => {
 
     return (
         <div>
+            <Helmet>
+                <title>Login | Champion Sports School</title>
+            </Helmet>
+
+
             <div className="hero h-72" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1596464716127-f2a82984de30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80)' }}>
                 <div className="hero-overlay bg-opacity-60"></div>
                 <div className="hero-content text-center text-neutral-content">

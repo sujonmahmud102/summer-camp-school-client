@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth/useAuth';
 import Swal from 'sweetalert2';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Helmet } from 'react-helmet';
 
 const Register = () => {
     const { createdByEmailPass, updateUserInfo } = useAuth();
@@ -97,6 +98,9 @@ const Register = () => {
 
     return (
         <div className='bg-[rgba(11,6,51,0.18)]'>
+            <Helmet>
+                <title>Register | Champion Sports School</title>
+            </Helmet>
 
             <div className="hero h-72" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1596464716127-f2a82984de30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80)' }}>
                 <div className="hero-overlay bg-opacity-60"></div>
