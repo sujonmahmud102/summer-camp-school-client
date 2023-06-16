@@ -18,7 +18,7 @@ const Classes = () => {
 
     // carts
     const { data: carts = [], refetch } = useQuery(['carts'], async () => {
-        const res = await fetch('http://localhost:5000/carts')
+        const res = await fetch('https://summer-camp-school-a12-server.vercel.app/carts')
         const data = await res.json();
         return data;
     });
@@ -26,7 +26,7 @@ const Classes = () => {
 
     // approved classes
     const { data: classes = [] } = useQuery(['classes'], async () => {
-        const res = await fetch('http://localhost:5000/approvedClasses')
+        const res = await fetch('https://summer-camp-school-a12-server.vercel.app/approvedClasses')
         const data = await res.json();
         return data;
     });
@@ -41,7 +41,7 @@ const Classes = () => {
 
             // console.log(cartItem);
 
-            fetch('http://localhost:5000/carts', {
+            fetch('https://summer-camp-school-a12-server.vercel.app/carts', {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json'

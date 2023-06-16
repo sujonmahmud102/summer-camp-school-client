@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 
 const Instructors = () => {
     const { data: users = [] } = useQuery(['users'], async () => {
-        const res = await fetch('http://localhost:5000/instructors')
+        const res = await fetch('https://summer-camp-school-a12-server.vercel.app/instructors')
         const data = await res.json();
         return data;
     });

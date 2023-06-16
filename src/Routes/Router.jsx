@@ -76,7 +76,7 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/updateClass/:id',
                 element: <InstructorRoute><UpdateClass></UpdateClass></InstructorRoute>,
-                loader: ({ params }) => fetch(`http://localhost:5000/classes/${params.id}`)
+                loader: ({ params }) => fetch(`https://summer-camp-school-a12-server.vercel.app/classes/${params.id}`)
             },
             // for student
             {

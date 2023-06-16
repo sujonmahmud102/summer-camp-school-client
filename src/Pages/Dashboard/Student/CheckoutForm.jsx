@@ -15,7 +15,7 @@ const CheckoutForm = ({ payClass }) => {
     const [transactionId, setTransactionId] = useState('');
 
     const price = payClass?.price;
-    
+
 
     useEffect(() => {
         if (price > 0) {
@@ -98,6 +98,14 @@ const CheckoutForm = ({ payClass }) => {
                         // display confirm
                     }
                 })
+
+            axiosSecure.patch(`/classes/reduce-seats/${payClass.classItemId}`)
+                .then(res => {
+                    console.log(res.data);
+                })
+                .catch(error => {
+                    console.error('An error occurred:', error);
+                });
         }
     }
 

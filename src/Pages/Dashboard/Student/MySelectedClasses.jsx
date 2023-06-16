@@ -10,7 +10,7 @@ const MySelectedClasses = () => {
     const { user } = useAuth();
 
     const { data: classes = [], refetch } = useQuery(['classes'], async () => {
-        const res = await fetch(`http://localhost:5000/selectedClasses?studentEmail=${user?.email}`)
+        const res = await fetch(`https://summer-camp-school-a12-server.vercel.app/selectedClasses?studentEmail=${user?.email}`)
         const data = await res.json();
         return data;
     });
@@ -29,7 +29,7 @@ const MySelectedClasses = () => {
         }).then((result) => {
             if (result.isConfirmed) {
 
-                fetch(`http://localhost:5000/selectedClasses/${id}`, {
+                fetch(`https://summer-camp-school-a12-server.vercel.app/selectedClasses/${id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())

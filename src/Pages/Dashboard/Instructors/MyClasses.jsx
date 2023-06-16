@@ -17,7 +17,7 @@ const MyClasses = () => {
     });
 
     const { data: classes = [] } = useQuery(['classes'], async () => {
-        const res = await axiosSecure.get(`http://localhost:5000/classes?instructorEmail=${user?.email}`);
+        const res = await axiosSecure.get(`https://summer-camp-school-a12-server.vercel.app/classes?instructorEmail=${user?.email}`);
         return res.data;
     });
 
@@ -51,7 +51,7 @@ const MyClasses = () => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/classes/${id}`, {
+                fetch(`https://summer-camp-school-a12-server.vercel.app/classes/${id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())

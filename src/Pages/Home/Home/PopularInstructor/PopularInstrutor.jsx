@@ -3,7 +3,7 @@ import { useQuery } from 'react-query';
 
 const PopularInstrutor = () => {
     const { data: instructors = [] } = useQuery(['instructors'], async () => {
-        const res = await fetch('http://localhost:5000/instructors')
+        const res = await fetch('https://summer-camp-school-a12-server.vercel.app/instructors')
         const data = await res.json();
         return data;
     });
@@ -15,7 +15,7 @@ const PopularInstrutor = () => {
 
             <div className='grid lg:grid-cols-3 gap-4 p-12'>
                 {
-                    instructors.map((instructor, index) => <div key={index} className="card w-full bg-base-100 shadow-xl border border-orange-950">
+                    instructors.map((instructor, index) => <div key={index} className="card w-full bg-base-100 shadow-xl border hover:border-orange-950">
                         <figure className="px-10 pt-10"><img className='w-36 h-36 rounded-xl' src={instructor.image} alt="" /></figure>
                         <div className="card-body">
                             <h2 className="card-title">{instructor.name}</h2>

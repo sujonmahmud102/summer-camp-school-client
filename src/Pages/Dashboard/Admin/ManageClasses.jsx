@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 
 const ManageClasses = () => {
     const { data: classes = [], refetch } = useQuery(['classes'], async () => {
-        const res = await fetch('http://localhost:5000/classes')
+        const res = await fetch('https://summer-camp-school-a12-server.vercel.app/classes')
         const data = await res.json();
         return data;
     });
@@ -12,7 +12,7 @@ const ManageClasses = () => {
 
     // handle classes approve
     const handleClassApproval = cls => {
-        fetch(`http://localhost:5000/classes/approve/${cls._id}`, {
+        fetch(`https://summer-camp-school-a12-server.vercel.app/classes/approve/${cls._id}`, {
             method: 'PATCH'
         })
             .then(res => res.json())
@@ -33,7 +33,7 @@ const ManageClasses = () => {
 
     // handle classes denied
     const handleClassDenied = cls => {
-        fetch(`http://localhost:5000/classes/deny/${cls._id}`, {
+        fetch(`https://summer-camp-school-a12-server.vercel.app/classes/deny/${cls._id}`, {
             method: 'PATCH'
         })
             .then(res => res.json())
@@ -78,7 +78,7 @@ const ManageClasses = () => {
                 const feedback = result.value;
                 console.log(feedback);
 
-                fetch(`http://localhost:5000/classes/feedback/${cls._id}`, {
+                fetch(`https://summer-camp-school-a12-server.vercel.app/classes/feedback/${cls._id}`, {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json'
