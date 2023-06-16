@@ -5,18 +5,13 @@ import { Link, NavLink, Outlet } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth/useAuth';
 import { useQuery } from 'react-query';
 import { Helmet } from 'react-helmet';
+import useAdmin from '../../hooks/useAdmin';
+import useInstructor from '../../hooks/useInstructor';
 
 const Dashboard = () => {
     const { user } = useAuth();
-
-    const { data: users = [] } = useQuery(['users'], async () => {
-        const res = await fetch('http://localhost:5000/users')
-        const data = await res.json();
-        return data;
-    });
-
-    console.log(users)
-    const currentUser = users?.find(cUser => cUser.email === user?.email);
+    const [isAdmin] = useAdmin();
+    const [isInstructor] = useInstructor();
 
 
     return (
@@ -46,7 +41,13 @@ const Dashboard = () => {
                                 <div>
                                     <p className='text-black'>{user?.displayName}</p>
                                     {/* todo make it dynamic */}
-                                    <p className='text-xs'>{currentUser?.role ? currentUser?.role : 'Student'}</p>
+                                    <p className='text-xs'>
+                                        <span>
+                                            {isAdmin && 'Admin'}
+                                            {isInstructor && 'Instructor'}
+                                            {(isAdmin || isInstructor) || 'Student'}
+                                        </span>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -70,7 +71,7 @@ const Dashboard = () => {
                         {/* dynamic route */}
 
                         {
-                            currentUser?.role === 'Admin' && <>
+                            isAdmin && <>
                                 {/* admin route */}
                                 <li>
                                     <NavLink
@@ -92,7 +93,7 @@ const Dashboard = () => {
                         {/* instructors route */}
 
                         {
-                            currentUser?.role === 'Instructor' && <>
+                            isInstructor && <>
                                 <li>
                                     <NavLink
                                         to='/dashboard/addAClass'
@@ -113,7 +114,7 @@ const Dashboard = () => {
 
                         {/* student route */}
                         {
-                            !currentUser?.role &&
+                            !(isAdmin || isInstructor) &&
                             (<>
                                 <li>
                                     <NavLink

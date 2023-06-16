@@ -17,6 +17,9 @@ import UpdateClass from '../Pages/Dashboard/Instructors/UpdateClass';
 import PrivateRoute from './PrivateRoute';
 import Payment from '../Pages/Dashboard/Student/Payment';
 import ErrorPage from '../Pages/ErrorPage/ErrorPage';
+import AdminRoute from './AdminRoute';
+import InstructorRoute from './InstructorRoute';
+import StudentRoute from './StudentRoute';
 
 
 
@@ -55,37 +58,37 @@ const router = createBrowserRouter([
             // for admin
             {
                 path: '/dashboard/manageClasses',
-                element: <ManageClasses></ManageClasses>
+                element: <AdminRoute><ManageClasses></ManageClasses></AdminRoute>
             },
             {
                 path: '/dashboard/manageUsers',
-                element: <ManageUsers></ManageUsers>
+                element: <AdminRoute><ManageUsers></ManageUsers></AdminRoute>
             },
             // for instructors
             {
                 path: '/dashboard/addAClass',
-                element: <AddClass></AddClass>
+                element: <InstructorRoute><AddClass></AddClass></InstructorRoute>
             },
             {
                 path: '/dashboard/myClasses',
-                element: <MyClasses></MyClasses>
+                element: <InstructorRoute><MyClasses></MyClasses></InstructorRoute>
             },
             // for student
             {
                 path: '/dashboard/selectedClasses',
-                element: <MySelectedClasses></MySelectedClasses>
+                element: <StudentRoute><MySelectedClasses></MySelectedClasses></StudentRoute>
             },
             {
                 path: '/dashboard/enrolledClasses',
-                element: <MyEnrolledClasses></MyEnrolledClasses>
+                element: <StudentRoute><MyEnrolledClasses></MyEnrolledClasses></StudentRoute>
             },
             {
                 path: '/dashboard/paymentHistory',
-                element: <PaymentHistory></PaymentHistory>
+                element: <StudentRoute><PaymentHistory></PaymentHistory></StudentRoute>
             },
             {
                 path: '/dashboard/updateClass/:id',
-                element: <UpdateClass></UpdateClass>,
+                element: <StudentRoute><UpdateClass></UpdateClass></StudentRoute>,
                 loader: ({ params }) => fetch(`http://localhost:5000/classes/${params.id}`)
             },
             {
