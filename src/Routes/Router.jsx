@@ -73,6 +73,11 @@ const router = createBrowserRouter([
                 path: '/dashboard/myClasses',
                 element: <InstructorRoute><MyClasses></MyClasses></InstructorRoute>
             },
+            {
+                path: '/dashboard/updateClass/:id',
+                element: <InstructorRoute><UpdateClass></UpdateClass></InstructorRoute>,
+                loader: ({ params }) => fetch(`http://localhost:5000/classes/${params.id}`)
+            },
             // for student
             {
                 path: '/dashboard/selectedClasses',
@@ -85,11 +90,6 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/paymentHistory',
                 element: <StudentRoute><PaymentHistory></PaymentHistory></StudentRoute>
-            },
-            {
-                path: '/dashboard/updateClass/:id',
-                element: <StudentRoute><UpdateClass></UpdateClass></StudentRoute>,
-                loader: ({ params }) => fetch(`http://localhost:5000/classes/${params.id}`)
             },
             {
                 path: '/dashboard/payment',
