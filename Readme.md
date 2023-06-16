@@ -13,8 +13,13 @@
 
 
 # About Project
-- 
-- 
-- 
-- 
-- 
+## Features of this project
+
+- Every one can register by email & password or by google accout
+- By default when user created she/he become a student
+- User can change their role admin or instructor
+- Instructor can add a new class
+- Student can payment his/her selected class by strip payment gateway
+
+## Technology
+- React JS, Tailwind CSS, Daisy UI, Firebase, Express, Nodejs, Mongodb, jwt, React query, Axios

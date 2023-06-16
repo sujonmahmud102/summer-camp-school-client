@@ -8,11 +8,12 @@ import { Helmet } from 'react-helmet';
 import useAdmin from '../../hooks/useAdmin';
 import useInstructor from '../../hooks/useInstructor';
 
+
 const Dashboard = () => {
     const { user } = useAuth();
     const [isAdmin] = useAdmin();
     const [isInstructor] = useInstructor();
-
+    
 
     return (
         <div>
@@ -25,7 +26,7 @@ const Dashboard = () => {
 
                     {/* navbar */}
 
-                    <div className="navbar-start md:navbar bg-base-200 px-10">
+                    <div className="navbar-start md:navbar bg-base-200 px-16">
                         <div className="flex-1">
                             <a className="btn btn-ghost normal-case text-xl">Dashboard</a>
                         </div>
@@ -33,13 +34,14 @@ const Dashboard = () => {
 
                             <div className="dropdown dropdown-end flex items-center gap-3">
                                 <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-                                    <div className="w-10 rounded-full ">
-                                        <img className='rounded-full w-6 h-6 md:w-10 md:h-10 mr-3' src={user?.photoURL} alt="User image" />
+                                    <div className=" ">
+                                        <img className='rounded-full w-16 h-16 mr-3' src={user?.photoURL} alt="User image" />
 
                                     </div>
                                 </label>
-                                <div>
+                                <div className='mr-6'>
                                     <p className='text-black'>{user?.displayName}</p>
+                                    <p className='text-black'>{user?.email}</p>
                                     {/* todo make it dynamic */}
                                     <p className='text-xs'>
                                         <span>

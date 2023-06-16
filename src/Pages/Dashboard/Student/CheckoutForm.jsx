@@ -1,6 +1,5 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { useEffect, useState } from 'react';
-import './CheckoutForm.css'
 import useAuth from '../../../hooks/useAuth/useAuth';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
@@ -15,9 +14,8 @@ const CheckoutForm = ({ payClass }) => {
     const [processing, setProcessing] = useState(false);
     const [transactionId, setTransactionId] = useState('');
 
-
-    const price = parseFloat(payClass.price);
-
+    const price = payClass?.price;
+    
 
     useEffect(() => {
         if (price > 0) {

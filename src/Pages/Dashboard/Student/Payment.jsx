@@ -20,7 +20,7 @@ const Payment = () => {
     // console.log(payClass)
     return (
         <div className='w-full'>
-            <h3 className="text-3xl text-center font-semibold my-4"> Pay Class For: {payClass.name}</h3>
+            <h3 className="text-3xl text-center font-semibold my-4"> Pay Class For: {payClass?.name}</h3>
 
             <Elements stripe={stripePromise}>
                 <CheckoutForm payClass={payClass}> </CheckoutForm>
