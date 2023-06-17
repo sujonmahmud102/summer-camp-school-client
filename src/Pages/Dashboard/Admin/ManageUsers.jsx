@@ -13,13 +13,10 @@ const ManageUsers = () => {
 
     // handle making admin
     const handleMakeAdmin = user => {
-        fetch(`https://summer-camp-school-a12-server.vercel.app/users/admin/${user._id}`, {
-            method: 'PATCH'
-        })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                if (data.modifiedCount) {
+        axiosSecure.patch(`/users/admin/${user._id}`)
+            .then(res => {
+                console.log(res.data);
+                if (res.data.modifiedCount) {
                     refetch();
                     Swal.fire({
                         position: 'top-center',
@@ -34,13 +31,10 @@ const ManageUsers = () => {
 
     // handle making instructor
     const handleMakeInstructor = user => {
-        fetch(`https://summer-camp-school-a12-server.vercel.app/users/instructor/${user._id}`, {
-            method: 'PATCH'
-        })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                if (data.modifiedCount) {
+        axiosSecure.patch(`/users/instructor/${user._id}`)
+            .then(res => {
+                console.log(res.data);
+                if (res.data.modifiedCount) {
                     refetch();
                     Swal.fire({
                         position: 'top-center',
