@@ -48,9 +48,9 @@ const ManageUsers = () => {
     }
 
     return (
-        <div className='w-full px-16'>
-            <h3 className="text-3xl text-center font-semibold my-4">Total Users: {users.length}</h3>
-            <div className="overflow-x-auto h-[500px] w-full mt-4">
+        <div className='w-full px-8 lg:px-16'>
+            <h3 className="text-3xl  text-center font-semibold mt-20 lg:mt-2 my-4">Total Users: {users.length}</h3>
+            <div className="hidden lg:block overflow-x-auto h-[500px] w-full mt-4">
                 <table className="table w-full">
                     {/* head */}
                     <thead className='sticky top-0 bg-error font-bold text-lg'>
@@ -101,11 +101,49 @@ const ManageUsers = () => {
 
                             </tr>)
                         }
-
-
                     </tbody>
                 </table>
             </div>
+
+            {/* for mobile devices */}
+            <div className='lg:hidden'>
+                {
+                    users.map((user, index) => <div className='border-b-4 p-4'
+                        key={user._id}
+                    >
+                        <div className='flex items-center text-2xl'>
+                            {index + 1}.
+                            <span className=' font-medium ml-3'> {user.name}</span>
+                            <img className='w-8 h-8 rounded-full ml-6' src={user.image} alt="" />
+                        </div>
+
+                        <div className='flex my-1 gap-2'>
+                            <span className='font-semibold'>Email:</span> {user.email}
+                        </div>
+                        <div className='flex my-1 gap-2'>
+                            <span className='font-semibold'>Role:</span>  {user.role ? user.role : 'User'}
+                        </div>
+                        <div className='flex my-1 gap-2'>
+                            <span className='font-semibold'>Action:</span>
+                            <div>
+                                {
+                                    user?.role === 'Admin' ? <button className="btn btn-xs rounded-md btn-ghost bg-error text-white" disabled="disabled">Make Admin</button>
+                                        :
+                                        <button onClick={() => handleMakeAdmin(user)} className="btn btn-xs rounded-md btn-ghost bg-error  text-white ml-2">Make Admin</button>
+                                }
+                                {
+                                    (user?.role === 'Admin' || user?.role === 'Instructor') ?
+                                        <button className="btn btn-xs 
+                                            rounded-md btn-ghost bg-gray-600 text-white ml-2" disabled="disabled">Make Instructor</button>
+                                        :
+                                        <button onClick={() => handleMakeInstructor(user)} className="btn btn-xs rounded-md btn-ghost bg-gray-600 text-white ml-2">Make Instructor</button>
+                                }
+                            </div>
+                        </div>
+
+                    </div>)
+                }
+            </div >
         </div>
     );
 };

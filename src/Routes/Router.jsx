@@ -20,6 +20,7 @@ import ErrorPage from '../Pages/ErrorPage/ErrorPage';
 import AdminRoute from './AdminRoute';
 import InstructorRoute from './InstructorRoute';
 import StudentRoute from './StudentRoute';
+import DashboardHome from '../Pages/Dashboard/DashboardHome/DashboardHome';
 
 
 
@@ -55,6 +56,11 @@ const router = createBrowserRouter([
         path: '/dashboard',
         element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
         children: [
+            {
+                path: '/dashboard',
+                element: <DashboardHome></DashboardHome>
+            },
+
             // for admin
             {
                 path: '/dashboard/manageClasses',

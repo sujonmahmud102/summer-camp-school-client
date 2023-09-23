@@ -1,5 +1,5 @@
 import logo from '../../assets/logo.png';
-import { FaCheckSquare, FaClipboardList, FaElementor, FaHome, FaMoneyCheck, FaPeopleArrows, FaPlusCircle, FaUserFriends, FaUsers, FaWallet } from 'react-icons/fa';
+import { FaBars, FaCheckSquare, FaClipboardList, FaElementor, FaHome, FaMoneyCheck, FaPeopleArrows, FaPlusCircle, FaUserFriends, FaUsers, FaWallet } from 'react-icons/fa';
 import { } from "react-icons/bi";
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth/useAuth';
@@ -26,9 +26,9 @@ const Dashboard = () => {
 
                     {/* navbar */}
 
-                    <div className="navbar-start md:navbar bg-base-200 px-16">
+                    <div className="absolute left-0 md:static w-full navbar-start md:navbar bg-base-200 px-16">
                         <div className="flex-1">
-                            <a className="btn btn-ghost normal-case text-xl">Dashboard</a>
+                            <a className="hidden lg:block btn btn-ghost normal-case text-xl">Dashboard</a>
                         </div>
                         <div className="flex-none gap-2">
 
@@ -57,7 +57,7 @@ const Dashboard = () => {
 
                     {/* Page content here */}
                     <Outlet></Outlet>
-                    <label htmlFor="my-drawer-2" className="btn btn-error drawer-button lg:hidden absolute top-0 left-0">Open Menu</label>
+                    <label htmlFor="my-drawer-2" className="btn btn-xs md:btn-sm drawer-button lg:hidden absolute top-4 md:top-6 left-0 md:left-5 text-xl"> <FaBars /></label>
 
                 </div>
                 <div className="drawer-side">

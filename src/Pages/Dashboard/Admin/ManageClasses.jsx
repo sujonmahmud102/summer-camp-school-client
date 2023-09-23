@@ -106,9 +106,9 @@ const ManageClasses = () => {
     }
 
     return (
-        <div className='w-full px-16'>
-            <h3 className="text-3xl text-center font-semibold my-4">Total Classes: {classes.length}</h3>
-            <div className="overflow-x-auto h-[500px] w-full mt-4">
+        <div className='w-full px-8 lg:px-16'>
+            <h3 className="text-3xl text-center font-semibold mt-20 lg:mt-2 my-4">Total Classes: {classes.length}</h3>
+            <div className="hidden lg:block overflow-x-auto h-[500px] w-full mt-4">
                 <table className="table w-full">
                     {/* head */}
                     <thead className='sticky top-0 bg-error font-bold'>
@@ -191,6 +191,76 @@ const ManageClasses = () => {
 
                     </tbody>
                 </table>
+            </div>
+
+            {/* for mobile devices */}
+
+            {/*  <th className=''>#</th>
+                            
+                           
+                            <th className=''>Instrustor Email</th>
+                            <th className=''>Seats</th>
+                            <th className=''>Price</th>
+                            <th className=''>Status</th>
+                            <th className='text-center'> Action</th> */}
+
+            <div className='lg:hidden'>
+                {
+                    classes.map(((cls, index) =>
+                        <div className="border-b-4 p-4" key={cls._id}>
+                            <div className='mt-3 flex items-center gap-3'>
+                                {index + 1}. <span className='font-bold'>{cls.className} </span>
+                                <img className='w-8 h-8 rounded-full ml-6' src={cls.classImage} alt="" />
+                            </div>
+                            <div className='my-2 '><span className='font-semibold'>Instrustor Name:</span> {cls.instructorName}</div>
+                            <div className='my-2 '><span className='font-semibold'>Instrustor Email:</span> {cls.instructorEmail}</div>
+                            <div className='my-2 '><span className='font-semibold'>Seats:</span> {cls.seats}</div>
+                            <div className='my-2 '><span className='font-semibold'>Price:</span> ${cls.price}</div>
+                            <div className='my-2'><span className="font-semibold">Status: </span>
+                                {
+                                    !cls?.status && <span className='text-yellow-500 font-bold'>
+                                        Pending
+                                    </span>
+                                }
+                                {
+                                    cls?.status == 'approved' && <span className='text-green-500 font-bold'>
+                                        Approved
+                                    </span>
+                                }
+                                {
+                                    cls?.status === 'denied' && <span className='text-red-500 font-bold'>
+                                        Denied
+                                    </span>
+                                }
+                            </div>
+                            <div className='flex gap-3 my-2'>
+                                <p className='font-semibold'>Feedback:</p>
+                                <button
+                                    onClick={() => handleFeedback(cls)}
+                                    className="btn btn-xs"
+                                >
+                                    Click to send
+                                </button>
+                            </div>
+
+                            <div className='my-2 '>
+                                <span className="font-semibold">Action: </span>
+                                {
+                                    (cls?.status === 'approved' || cls?.status === 'denied') ? <button className="btn btn-xs rounded-md btn-ghost bg-error text-white" disabled="disabled">Approve</button>
+                                        :
+                                        <button onClick={() => handleClassApproval(cls)} className="btn btn-xs rounded-md btn-ghost bg-green-500  text-white">Approve</button>
+                                }
+                                {
+                                    (cls?.status === 'approved' || cls?.status === 'denied') ?
+                                        <button className="btn btn-xs 
+                                        rounded-md btn-ghost bg-red-500 text-white ml-2" disabled="disabled">Deny</button>
+                                        :
+                                        <button onClick={() => handleClassDenied(cls)} className="btn btn-xs rounded-md btn-ghost bg-red-500 text-white ml-2">Deny</button>
+                                }
+                            </div>
+                        </div>
+                    ))
+                }
             </div>
         </div>
     );
